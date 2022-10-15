@@ -1,7 +1,17 @@
 <template>
   <div class="home">
     <h1>HomeVue</h1>
-    <p ref="p" @click="handleClick">This is a {{name}} {{age}}. Composition API!</p>
+    <div v-if="error">{{ error }}</div>
+    <div v-if="posts.length">
+      <PostList v-if="showPosts" :posts="posts" />
+    </div>
+    <div v-else>Loading...</div>
+    <button @click="showPosts = !showPosts">
+      <span v-if="showPosts">hide posts</span>
+      <span v-else>show posts</span>
+    </button>
+    <button @click="deletePost(posts)">delete post</button>
+    <!-- <p ref="p" @click="handleClick">This is a {{name}} {{age}}. Composition API!</p>
     <input v-model="name" type="text" />
     <button @click="age++">age +</button>
     <h2>Ref</h2>
@@ -14,46 +24,63 @@
     <div v-for="name in matchingNames" :key="name">
       {{ name }}
     </div>
+    <button @click="handleWatchAndEffect">Stop Watching</button> -->
   </div>
 </template>
-
 <script>
 // @ is an alias to /src
-import { ref, reactive, computed } from 'vue'
-
+import { ref, reactive, computed, watch, watchEffect } from "vue";
+import PostList from "../components/PostList.vue";
+import getPosts from "@/composables/getPosts";
 export default {
   name: "HomeView",
+  components: {
+    PostList,
+  },
   setup() {
-    // const p = ref(null)
+    const { posts, error, fetchData } = getPosts();
 
-    const name = ref('Vue')
-    const age = ref(3)
+    fetchData();
 
-    const personOne = ref({profession: 'mobile developer', age: 20})
-    const personTwo = reactive({profession: 'Web Developer', age: 30})
+    const showPosts = ref(true);
 
-    const search = ref('')
-    const names = ref(['mario', 'yoshi', 'luigi', 'toad', 'bowser', 'koopa', 'peach'])
+    const deletePost = (posts) => {
+      return posts.pop();
+    };
 
-    const matchingNames = computed( () => {
-      return names.value.filter((name) => name.includes(search.value))
-    })
-    
-    const updatePersonOne = () => {
-      personOne.value.profession = 'Swift IOS Developer'
-      personOne.value.age = 21
-    }
-    const updatePersonTwo = () => {
-      personTwo.profession = 'Front end Developer'
-      personTwo.age = 25
-    }
-    
-    const handleClick = () => {
-      name.value = 'React'
-      age.value = 15
-    }
-
-    return {name, age, handleClick, personOne, personTwo, updatePersonOne, updatePersonTwo, names, search, matchingNames}
+    return { posts, showPosts, deletePost, error };
+    // const name = ref('Vue')
+    // const age = ref(3)
+    // const personOne = ref({profession: 'mobile developer', age: 20})
+    // const personTwo = reactive({profession: 'Web Developer', age: 30})
+    // const search = ref('')
+    // const names = ref(['mario', 'yoshi', 'luigi', 'toad', 'bowser', 'koopa', 'peach'])
+    // const watchUpdate = watch(search, () => {
+    //   console.log('watch fired')
+    // })
+    // const watchEffectUpdate =  watchEffect(() => {
+    //   console.log('watchEffect fired', search.value);
+    // })
+    // const handleWatchAndEffect = () => {
+    //   watchUpdate() //stop watch
+    //   watchEffectUpdate() //stop watchEffect
+    // }
+    // const matchingNames = computed( () => {
+    //   return names.value.filter((name) => name.includes(search.value))
+    // })
+    // const updatePersonOne = () => {
+    //   personOne.value.profession = 'Swift IOS Developer'
+    //   personOne.value.age = 21
+    // }
+    // const updatePersonTwo = () => {
+    //   personTwo.profession = 'Front end Developer'
+    //   personTwo.age = 25
+    // }
+    // const handleClick = () => {
+    //   name.value = 'React'
+    //   age.value = 15
+    // }
+    // return {name, age, handleClick, personOne, personTwo, updatePersonOne, updatePersonTwo, names, search, matchingNames, handleWatchAndEffect}
   },
 };
 </script>
