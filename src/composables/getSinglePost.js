@@ -6,6 +6,9 @@ const getSinglePost = (id) => {
 
   const fetchData = async () => {
     try {
+      await new Promise(resolve => {
+        setTimeout(resolve, 3000)
+      })
       let data = await fetch('http://localhost:3000/posts/' + id);
       if (!data.ok) {
         throw Error("Post does not exists ");

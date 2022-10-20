@@ -5,7 +5,7 @@
     <div v-if="posts.length">
       <PostList v-if="showPosts" :posts="posts" />
     </div>
-    <div v-else>Loading...</div>
+    <div v-else><Spinner /></div>
     <button @click="showPosts = !showPosts">
       <span v-if="showPosts">hide posts</span>
       <span v-else>show posts</span>
@@ -32,10 +32,12 @@
 import { ref, reactive, computed, watch, watchEffect } from "vue";
 import PostList from "../components/PostList.vue";
 import getPosts from "@/composables/getPosts";
+import Spinner from "@/components/Spinner.vue";
 export default {
   name: "HomeView",
   components: {
     PostList,
+    Spinner,
   },
   setup() {
     const { posts, error, fetchData } = getPosts();

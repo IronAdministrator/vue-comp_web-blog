@@ -4,12 +4,19 @@
     <h3>{{ post.title }}</h3>
     <p class="pre">{{ post.body }}</p>
   </div>
+  <div v-else>
+    <Spinner />
+  </div>
 </template>
 
 <script>
 import getSinglePost from "@/composables/getSinglePost";
+import Spinner from "@/components/Spinner.vue";
 export default {
   props: ["id"],
+  components: {
+    Spinner,
+  },
   setup(props) {
     const { post, error, fetchData } = getSinglePost(props.id);
 
