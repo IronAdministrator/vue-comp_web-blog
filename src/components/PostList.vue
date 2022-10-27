@@ -9,10 +9,11 @@
 
 <script>
 import SinglePost from "./SinglePost.vue";
+import Tag from "@/views/Tag.vue";
 import { onMounted, onUnmounted, onUpdated } from "vue";
 export default {
   props: ["posts"],
-  components: { SinglePost },
+  components: { SinglePost, Tag },
   setup(props) {
     console.log(props.posts);
     onMounted(() => {

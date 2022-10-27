@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <h1>HomeVue</h1>
     <div v-if="error">{{ error }}</div>
     <div v-if="posts.length">
       <PostList v-if="showPosts" :posts="posts" />
@@ -86,3 +85,10 @@ export default {
   },
 };
 </script>
+<style>
+.home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+</style>

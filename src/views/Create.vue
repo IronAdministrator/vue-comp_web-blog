@@ -22,6 +22,7 @@ export default {
     const body = ref("");
     const tag = ref("");
     const tags = ref([]);
+    const error = ref(null);
 
     const handleKeydown = () => {
       if (tag.value.length > 0 && tag.value.trim().length !== 0) {
@@ -39,12 +40,16 @@ export default {
         body: body.value,
         tags: tags.value,
       };
-      await fetch("http://localhost:3000/posts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(post),
-      });
-      router.push("/");
+      try {
+        await fetch("http://localhost:3000/psts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(post),
+        });
+      } catch (err) {
+        console.log(err.message);
+      }
+      router.push({ name: "Home" });
     };
 
     return { title, body, tag, tags, handleKeydown, handleSubmit };
