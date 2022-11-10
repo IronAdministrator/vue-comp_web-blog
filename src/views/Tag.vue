@@ -12,8 +12,8 @@
 
 <script>
 import getPosts from "@/composables/getPosts";
-import PostList from "@/components/PostList.vue";
-import Spinner from "@/components/Spinner.vue";
+import PostList from "@/components/PostList";
+import Spinner from "@/components/Spinner";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 
@@ -32,7 +32,7 @@ export default {
       return posts.value.filter((post) => post.tags.includes(route.params.tag));
     });
 
-    return { posts, error, route, filteredPosts };
+    return { posts, error, filteredPosts };
   },
 };
 </script>

@@ -41,7 +41,7 @@ export default {
         tags: tags.value,
       };
       try {
-        await fetch("http://localhost:3000/psts", {
+        await fetch("http://localhost:3000/posts", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(post),

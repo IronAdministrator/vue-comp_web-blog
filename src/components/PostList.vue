@@ -9,25 +9,24 @@
 
 <script>
 import SinglePost from "./SinglePost.vue";
-import Tag from "@/views/Tag.vue";
 import { onMounted, onUnmounted, onUpdated } from "vue";
 export default {
   props: ["posts"],
-  components: { SinglePost, Tag },
+  components: { SinglePost },
   setup(props) {
     console.log(props.posts);
-    onMounted(() => {
-      console.log("onMounted fired");
-    });
-    onUnmounted(() => {
-      console.log("onUnmounted fired");
-    });
-    onUpdated(() => {
-      console.log("onUpdated fired");
-    });
+    // onMounted(() => {
+    //   console.log("onMounted fired");
+    // });
+    // onUnmounted(() => {
+    //   console.log("onUnmounted fired");
+    // });
+    // onUpdated(() => {
+    //   console.log("onUpdated fired");
+    // });
     return {};
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
