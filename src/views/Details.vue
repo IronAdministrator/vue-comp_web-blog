@@ -10,17 +10,17 @@
 </template>
 
 <script>
-import getSinglePost from "@/composables/getSinglePost";
+import getData from "@/composables/getData";
 import Spinner from "@/components/Spinner.vue";
 import { useRoute } from "vue-router";
 export default {
-  // props: ["id"],
+  props: ["id"],
   components: {
     Spinner,
   },
   setup(props) {
     const route = useRoute();
-    const { post, error, fetchData } = getSinglePost(route.params.id);
+    const { fetchedData: post, error, fetchData } = getData(`http://localhost:3000/posts/${route.params.id}`);
 
     fetchData();
     return { post, error };

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div v-if="error">{{ error }}</div>
-    <div v-if="posts.length">
+    <div v-if="posts">
       <PostList v-if="showPosts" :posts="posts" />
     </div>
     <div v-else><Spinner /></div>
@@ -30,7 +30,7 @@
 // @ is an alias to /src
 import { ref, reactive, computed, watch, watchEffect } from "vue";
 import PostList from "../components/PostList.vue";
-import getPosts from "@/composables/getPosts";
+import getData from "@/composables/getData";
 import Spinner from "@/components/Spinner.vue";
 export default {
   name: "HomeView",
@@ -39,7 +39,7 @@ export default {
     Spinner,
   },
   setup() {
-    const { posts, error, fetchData } = getPosts();
+    const { fetchedData: posts, error, fetchData } = getData(`http://localhost:3000/posts`);
 
     fetchData();
 

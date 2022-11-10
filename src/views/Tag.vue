@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import getPosts from "@/composables/getPosts";
+import getData from "@/composables/getData";
 import PostList from "@/components/PostList";
 import Spinner from "@/components/Spinner";
 import { useRoute } from "vue-router";
@@ -24,7 +24,7 @@ export default {
   },
   setup() {
     const route = useRoute();
-    const { posts, error, fetchData } = getPosts();
+    const { fetchedData: posts, error, fetchData } = getData(`http://localhost:3000/posts`);
 
     fetchData();
 
