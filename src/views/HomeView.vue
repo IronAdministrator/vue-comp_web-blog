@@ -1,8 +1,9 @@
 <template>
   <div class="home">
     <div v-if="error">{{ error }}</div>
-    <div v-if="posts">
+    <div v-if="posts" class="layout">
       <PostList v-if="showPosts" :posts="posts" />
+      <TagCloud :posts="posts" />
     </div>
     <div v-else><Spinner /></div>
     <button @click="showPosts = !showPosts">
@@ -32,11 +33,13 @@ import { ref, reactive, computed, watch, watchEffect } from "vue";
 import PostList from "../components/PostList.vue";
 import getData from "@/composables/getData";
 import Spinner from "@/components/Spinner.vue";
+import TagCloud from "@/components/TagCloud.vue";
 export default {
   name: "HomeView",
   components: {
     PostList,
     Spinner,
+    TagCloud
   },
   setup() {
     const { fetchedData: posts, error, fetchData } = getData(`http://localhost:3000/posts`);
@@ -90,5 +93,10 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   padding: 10px;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1.5rem;
 }
 </style>
