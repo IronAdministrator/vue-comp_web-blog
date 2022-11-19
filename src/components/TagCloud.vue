@@ -1,14 +1,3 @@
-<template>
-  <div class="tag-cloud">
-    <h3>Tags</h3>
-    <div v-for="tag in tags" :key="tag">
-    <router-link :to="{name: 'Tag', params:{tag: tag} }">
-      #{{ tag }}
-    </router-link>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { ref, onMounted } from 'vue';
 // import useTags from '@/composables/useTags';
@@ -27,6 +16,17 @@ props.posts.forEach(post => {
 tags.value = [...tagSet]
 
 </script>
+
+<template>
+  <div class="tag-cloud">
+    <h3>Tags</h3>
+    <div v-for="tag in tags" :key="tag">
+    <router-link :to="{name: 'Tag', params:{tag: tag} }">
+      #{{ tag }}
+    </router-link>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .tag-cloud {

@@ -1,3 +1,57 @@
+<script setup>
+  import { ref } from "vue";
+  import { useRouter, useRoute } from "vue-router";
+  import getData from "@/composables/getData";
+  import { timestamp } from '@/firebase/config';
+
+
+  const router = useRouter();
+  const route = useRoute();
+  const title = ref("");
+  const body = ref("");
+  const tag = ref("");
+  const tags = ref([]);
+  // const error = ref(null);
+  const { createData } = getData('posts');
+
+  const handleKeydown = () => {
+    if (tag.value.length > 0 && tag.value.trim().length !== 0) {
+      if (!tags.value.includes(tag.value)) {
+        tag.value = tag.value.replace(/\s/, "");
+        tags.value.push(tag.value);
+      }
+    }
+    tag.value = "";
+  };
+
+  //todo Ask Anton for a better solution of wether this solution is ok !!!
+  const handleSubmit = async () => {
+
+    // Creating an Object to send to Database
+    let post = {
+      title: title.value,
+      body: body.value,
+      tags: tags.value,
+      createdAt: timestamp(),
+    };
+    // try {
+      // await fetch("http://localhost:3000/posts", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(post),
+      // });
+      // const res = await projectFirestore.collection('posts').add(post)
+      // console.log(res);
+    // } catch (err) {
+    //   console.log(err.message);
+    // }
+
+    // Calling a function from getData Composable and passing an Object created beforehand
+    await createData(post)
+    router.push({ name: "Home" });
+  };
+</script>
+
 <template>
   <form class="create" @submit.prevent="handleSubmit">
     <label>Title:</label>
@@ -11,53 +65,7 @@
   </form>
 </template>
 
-<script>
-import { ref } from "vue";
-import { useRouter, useRoute } from "vue-router";
-export default {
-  setup() {
-    const router = useRouter();
-    const route = useRoute();
-    const title = ref("");
-    const body = ref("");
-    const tag = ref("");
-    const tags = ref([]);
-    const error = ref(null);
-
-    const handleKeydown = () => {
-      if (tag.value.length > 0 && tag.value.trim().length !== 0) {
-        if (!tags.value.includes(tag.value)) {
-          tag.value = tag.value.replace(/\s/, "");
-          tags.value.push(tag.value);
-        }
-      }
-      tag.value = "";
-    };
-
-    const handleSubmit = async () => {
-      let post = {
-        title: title.value,
-        body: body.value,
-        tags: tags.value,
-      };
-      try {
-        await fetch("http://localhost:3000/posts", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(post),
-        });
-      } catch (err) {
-        console.log(err.message);
-      }
-      router.push({ name: "Home" });
-    };
-
-    return { title, body, tag, tags, handleKeydown, handleSubmit };
-  },
-};
-</script>
-
-<style scoped>
+<style>
 form {
   max-width: 480px;
   margin: 0 auto;

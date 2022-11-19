@@ -1,13 +1,3 @@
-<template>
-  <div class="post">
-    <router-link :to="{ name: 'Details', params: { id: post.id } }">
-      <h3>{{ post.title }}</h3>
-    </router-link>
-    <p>{{ snippet }}</p>
-    <span v-for="tag in post.tags" :key="tag"> #{{ tag }} </span>
-  </div>
-</template>
-
 <script>
 import { computed } from "vue";
 export default {
@@ -21,7 +11,17 @@ export default {
 };
 </script>
 
-<style scoped>
+<template>
+  <div class="post">
+    <router-link :to="{ name: 'Details', params: { id: post.id } }">
+      <h3>{{ post.title }}</h3>
+    </router-link>
+    <p>{{ snippet }}</p>
+    <span v-for="tag in post.tags" :key="tag"> #{{ tag }} </span>
+  </div>
+</template>
+
+<style>
 .post {
   margin: 0 40px 30px;
   padding-bottom: 30px;
