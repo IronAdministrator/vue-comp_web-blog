@@ -22,6 +22,11 @@ const routes = [
     component: Create,
   },
   {
+    path: '/edit/:id',
+    name: 'Edit',
+    component: Create,
+  },
+  {
     path: '/tags/:tag',
     name: 'Tag',
     component: Tag

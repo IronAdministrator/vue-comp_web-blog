@@ -17,7 +17,7 @@ const getData = (url, docID) => {
       //   throw Error("No data available");
       // }
       // fetchedData.value = await data.json();
-      let res = await projectFirestore.collection(url).orderBy('createdAt', 'desc').get()
+      let res = await projectFirestore.collection(url).orderBy('updatedAt', 'desc').get()
       // console.log(res.docs);
       fetchedData.value = res.docs.map((doc) => {
         // doc = [...doc]
@@ -78,7 +78,11 @@ const getData = (url, docID) => {
     await projectFirestore.collection(url).doc(docID).delete()
     console.log(docID);
   }
-  return {fetchedData, error, loading, fetchData, fetchDataWithID, createData, deleteData}
+
+  const updateData = async (useData) => {
+    await projectFirestore.collection(url).doc(docID).update(useData)
+  }
+  return {fetchedData, error, loading, fetchData, fetchDataWithID, createData, deleteData, updateData}
 }
 
 export default getData

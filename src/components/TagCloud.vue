@@ -29,7 +29,7 @@ tags.value = [...tagSet]
 </template>
 
 <style scoped>
-.tag-cloud {
+  .tag-cloud {
     padding: 10px;
   }
   .tag-cloud h3 {

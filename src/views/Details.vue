@@ -24,7 +24,12 @@
   <div v-if="post" class="post">
     <h3>{{ post.title }}</h3>
     <p class="pre">{{ post.body }}</p>
-    <button @click="handleDelete" class="delete">Delete</button>
+    <div class="btn-container">
+      <button @click="handleDelete" class="delete">Delete</button>
+      <router-link :to="{name: 'Edit', params:{id: post.id} }">
+        <button>Edit</button>
+      </router-link>
+    </div>
   </div>
   <div v-if="loading">
     <Spinner />
@@ -44,7 +49,9 @@
   .pre {
     white-space: pre-wrap;
   }
-  button.delete {
-    margin: 10px auto;
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
   }
 </style>

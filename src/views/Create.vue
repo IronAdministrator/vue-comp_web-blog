@@ -1,5 +1,5 @@
 <script setup>
-  import { ref } from "vue";
+  import { ref, onMounted } from "vue";
   import { useRouter, useRoute } from "vue-router";
   import getData from "@/composables/getData";
   import { timestamp } from '@/firebase/config';
@@ -12,7 +12,17 @@
   const tag = ref("");
   const tags = ref([]);
   // const error = ref(null);
-  const { createData } = getData('posts');
+  const { fetchedData: post, createData, fetchDataWithID, updateData } = getData('posts', route.params.id);
+
+  // first fetch to populate input fields if ID exists
+  onMounted(async () => {
+    if (route.params.id) {
+      await fetchDataWithID()
+      title.value = post.value.title
+      body.value = post.value.body
+      tags.value = post.value.tags
+    }
+  })
 
   const handleKeydown = () => {
     if (tag.value.length > 0 && tag.value.trim().length !== 0) {
@@ -26,13 +36,19 @@
 
   //todo Ask Anton for a better solution of wether this solution is ok !!!
   const handleSubmit = async () => {
-
-    // Creating an Object to send to Database
-    let post = {
+    // Creating an Object to send to Database on create/update
+    let postOnCreate = {
       title: title.value,
       body: body.value,
       tags: tags.value,
       createdAt: timestamp(),
+      updatedAt: timestamp()
+    };
+    let postOnUpdate = {
+      title: title.value,
+      body: body.value,
+      tags: tags.value,
+      updatedAt: timestamp()
     };
     // try {
       // await fetch("http://localhost:3000/posts", {
@@ -46,8 +62,12 @@
     //   console.log(err.message);
     // }
 
-    // Calling a function from getData Composable and passing an Object created beforehand
-    await createData(post)
+    if (route.params.id) {
+      await updateData(postOnUpdate)
+    } else {
+      // Calling a function from getData Composable and passing an Object created beforehand 
+      await createData(postOnCreate)
+    }
     router.push({ name: "Home" });
   };
 </script>

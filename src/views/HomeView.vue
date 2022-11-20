@@ -86,7 +86,12 @@ import TagCloud from "@/components/TagCloud.vue";
 }
 .layout {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1.5rem;
+}
+@media only screen and (min-width: 600px) {
+  .layout {
+    grid-template-columns: 3fr 1fr;
+  }
 }
 </style>

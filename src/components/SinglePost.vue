@@ -14,7 +14,7 @@ export default {
 <template>
   <div class="post">
     <router-link :to="{ name: 'Details', params: { id: post.id } }">
-      <h3>{{ post.title }}</h3>
+      <h3>{{ post.title }} <span class="material-icons">keyboard_double_arrow_right</span></h3>
     </router-link>
     <p>{{ snippet }}</p>
     <span v-for="tag in post.tags" :key="tag"> #{{ tag }} </span>
@@ -27,13 +27,20 @@ export default {
   padding-bottom: 30px;
   border-bottom: 1px dashed #e7e7e7;
 }
+.post a {
+  text-decoration: none;
+  display: flex;
+  width: fit-content;
+}
 .post h3 {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: fit-content;
   position: relative;
   font-size: 26px;
   color: white;
   margin-bottom: 10px;
-  max-width: 400px;
 }
 .post h3::before {
   content: "";
