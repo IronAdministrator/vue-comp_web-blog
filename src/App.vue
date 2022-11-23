@@ -1,16 +1,16 @@
 <template>
   <Navbar />
-  <router-view />
+  <router-view :key="route.path"/>
 </template>
-<script>
-import Navbar from "@/components/Navbar.vue";
 
-export default {
-  components: {
-    Navbar,
-  },
-};
+<script setup>
+import Navbar from "@/components/Navbar.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute()
+
 </script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

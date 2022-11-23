@@ -34,7 +34,6 @@
     tag.value = "";
   };
 
-  //todo Ask Anton for a better solution of wether this solution is ok !!!
   const handleSubmit = async () => {
     // Creating an Object to send to Database on create/update
     let postOnCreate = {
@@ -42,7 +41,7 @@
       body: body.value,
       tags: tags.value,
       createdAt: timestamp(),
-      updatedAt: timestamp()
+      updatedAt: ''
     };
     let postOnUpdate = {
       title: title.value,
