@@ -53,6 +53,16 @@ const getData = (url, docID) => {
     }
   }
 
+  const fetchRealtimeData = async () => {
+    projectFirestore.collection(url).orderBy('updatedAt', 'desc').onSnapshot((snap) => {
+      let res = snap.docs.map((doc) => {
+        return {...doc.data(), id: doc.id}
+      })
+      console.log(res);
+      fetchedData.value = res
+    })
+  }
+
   const createData = async (post) => {
     // post = {
     //   title: title.value,
@@ -82,7 +92,7 @@ const getData = (url, docID) => {
   const updateData = async (useData) => {
     await projectFirestore.collection(url).doc(docID).update(useData)
   }
-  return {fetchedData, error, loading, fetchData, fetchDataWithID, createData, deleteData, updateData}
+  return {fetchedData, error, loading, fetchData, fetchDataWithID, fetchRealtimeData, createData, deleteData, updateData}
 }
 
 export default getData
